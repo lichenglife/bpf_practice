@@ -11,7 +11,7 @@
 #define LAST_ARG (FULL_MAX_ARGS_ARR - ARGSIZE)
 
 // 定义数据结构
-struct data_texec
+struct data_t
 {
     u32 pid;
     char comm[TASK_COMM_LEN];
