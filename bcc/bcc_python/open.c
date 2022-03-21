@@ -3,7 +3,7 @@
 
 // 定义数据结构
 
-struct date_t
+struct data_st
 {
     u32 pid;
     u64 ts;
@@ -17,15 +17,15 @@ BPF_PERF_OUTPUT(events);
 //  定义 内核处理函数,如何处理参数
 int hello_world(struct pt_regs *ctx,int dfd,const  char __user *filename, struct open_how *how){
 
-   struct  data_t  data =  {  };
-   // 获取进程的 PID  以及时间
-   data.pid = bpf_get_current_pid_tgid();
-   data.ts = bpf_ktime_get_ns();
+    struct data_st data = {};
+    // 获取进程的 PID  以及时间
+    data.pid = bpf_get_current_pid_tgid();
+    data.ts = bpf_ktime_get_ns();
 
-   // 获取进程名
-   if (bpf_get_current_comm(&data.comm, sizeof(data.comm)) == 0)
-   {
-       bpf_probe_read(&data.fname,sizeof(data.fname),(void*)filename);
+    // 获取进程名
+    if (bpf_get_current_comm(&data.comm, sizeof(data.comm)) == 0)
+    {
+        bpf_probe_read(&data.fname, sizeof(data.fname), (void *)filename);
     }
     
     // 提交性能事件，将事件提交到  map中，用于用户态读取

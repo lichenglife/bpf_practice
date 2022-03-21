@@ -2,6 +2,7 @@ from  bcc    import  BPF
 # 加载 BPF  程序
 
 b =  BPF(src_file="open.c")
+# 将BPF程序绑定到内核函数
 b.attach_kprobe(event = "do_sys_openat2",fname="hello_world")
 
 print("%-18s %-16s %-6s %-16s" % ("TIME(s)", "COMM", "PID", "FILE"))
@@ -15,6 +16,7 @@ def  print_event(cpu,data,size):
              start = event.ts
     # 时间  纳秒级别         
     time_s = (float(event.ts -start)) / 1000000000
+    # 打印时间、命令内容、进程PID、打开的文件名
     print("%-18.9f %-16s %-6d %-16s" % (time_s, event.comm, event.pid, event.fname))
 
 #  将收集的事件信息
