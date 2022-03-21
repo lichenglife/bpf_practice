@@ -9,4 +9,6 @@
 from  bcc  import  BPF
 
 # BCC 宏定义
-BPF(text='int kprobe__sys_clone(void *ctx){bpf_trace_printk("hello world! \\n"; return 0 ;)}').trace_print()
+BPF(text='int kprobe__sys_clone(void *ctx){bpf_trace_printk("hello world! \\n"); return 0 ;}').trace_print()
+
+
